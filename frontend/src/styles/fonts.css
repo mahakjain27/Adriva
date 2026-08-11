@@ -1,0 +1,30 @@
+/**
+ * Primary: Inter — UI text, body copy.
+ * Secondary: Plus Jakarta Sans — headings, display type (default theme).
+ * Playfair Display — Luxury theme's section-heading font (see
+ * styles/themes/luxury.css), including its italic cut.
+ * Cormorant Garamond — Luxury theme's signature name/avatar font (`font-luxury`),
+ * including its italic cut for the person name.
+ * The rest are the Theme Builder's curated Typography fonts
+ * (features/theme-builder/curatedFonts.ts) — Libre Baskerville (Luxury),
+ * Public Sans (Executive, substituting for the unavailable General Sans),
+ * Sora/Manrope/DM Sans (Modern, Sora substituting for the unavailable
+ * Satoshi), IBM Plex Sans/Source Sans 3 (Minimal), Outfit/Space Grotesk
+ * (Glass).
+ * Self-hosted via Fontsource (variable fonts) so we never depend on Google Fonts at runtime.
+ */
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/plus-jakarta-sans";
+@import "@fontsource-variable/playfair-display";
+@import "@fontsource-variable/playfair-display/wght-italic.css";
+@import "@fontsource-variable/cormorant-garamond";
+@import "@fontsource-variable/cormorant-garamond/wght-italic.css";
+@import "@fontsource-variable/libre-baskerville";
+@import "@fontsource-variable/public-sans";
+@import "@fontsource-variable/sora";
+@import "@fontsource-variable/manrope";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/ibm-plex-sans";
+@import "@fontsource-variable/source-sans-3";
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/space-grotesk";

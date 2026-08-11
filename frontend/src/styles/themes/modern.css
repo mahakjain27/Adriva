@@ -1,0 +1,85 @@
+/**
+ * Modern theme skin. Scoped entirely under `.theme-modern` (applied by
+ * ProfileLayout — see src/features/profiles/ProfileLayout.tsx). Overrides
+ * the same semantic tokens shadcn/ui defines in src/index.css, so anything
+ * built against those tokens (GlassCard, shadcn components, etc.) picks
+ * this up automatically. High-contrast, geometric, near-black base — with a
+ * soft pastel-blue accent (not a vivid/saturated one) and a sharp small
+ * radius. The inverse of Luxury's light pastel softness.
+ */
+.theme-modern {
+  --background: oklch(0.13 0.012 260);
+  --foreground: oklch(0.98 0 0);
+
+  --card: oklch(0.17 0.014 260);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.17 0.014 260);
+  --popover-foreground: oklch(0.98 0 0);
+
+  /* One soft pastel blue carries the whole theme — primary and accent are
+     the same color on purpose, not two competing hues. */
+  --primary: oklch(0.85 0.06 220);
+  --primary-foreground: oklch(0.15 0 0);
+  --secondary: oklch(0.22 0.016 260);
+  --secondary-foreground: oklch(0.98 0 0);
+  --muted: oklch(0.22 0.016 260);
+  --muted-foreground: oklch(0.68 0.02 260);
+  --accent: oklch(0.85 0.06 220);
+  --accent-foreground: oklch(0.15 0 0);
+
+  --border: oklch(0.98 0 0 / 16%);
+  --input: oklch(0.98 0 0 / 16%);
+  --ring: oklch(0.85 0.06 220);
+
+  /* Sharp and geometric — a fraction of Luxury's generous 1.25rem. */
+  --radius: 0.375rem;
+
+  /* Modern's signature voice — overrides the app-wide Plus Jakarta Sans
+     (tokens.css) for anything using the `font-heading` utility, scoped to
+     this theme only (same pattern as Luxury's Playfair Display override).
+     Used by the employee name (via --font-name below), section titles,
+     company name, designation, and button/quick-action labels. */
+  --font-heading: "Sora Variable", "Sora", system-ui, sans-serif;
+
+  /* The Hero name's font, as a theme-agnostic seam (LuxuryHero/ModernHero
+     both read --font-name) — defined in terms of what Modern already has, so
+     this line changes nothing on its own; it only matters once the Theme
+     Builder's Typography section overrides --font-name directly. */
+  --font-name: var(--font-heading);
+
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.45);
+  --shadow-xl: 0 28px 60px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 0 1px oklch(0.85 0.06 220 / 40%), 0 0 32px oklch(0.5 0.19 262 / 35%);
+
+  /* The three flow-band colors sampled by ModernAmbientBackground's shader
+     — hooks/useShaderCanvas.ts reads these directly. Hero-exclusive, same
+     as --luxury-hero-* never leaking into GlassCard/About/Products/Location.
+     Kept in one blue family (pastel blue → deep indigo → near-black) rather
+     than pairing with a second, competing hue) by default — but deferring
+     to --brand-gradient-from/to first, so a customized company's shader
+     flows through their own brand colors instead. */
+  --modern-shader-color-1: var(--brand-gradient-from, oklch(0.85 0.06 220));
+  --modern-shader-color-2: var(--brand-gradient-to, oklch(0.5 0.19 262));
+  --modern-shader-color-3: oklch(0.13 0.012 260);
+
+  /* Structural only, same as Luxury's remaining --luxury-hero-* tokens —
+     every *color* the Hero shows now derives from the general tokens above
+     via color-mix, so it stays in sync with per-company customization. */
+  --modern-hero-card-border: oklch(0.98 0 0 / 14%);
+
+  /* Brand-tinted, not flat neutral — every divider/card border across About/
+     Products/Location/WorkingHours reads this one var, so tinting it here
+     once (rather than per-component) reaches all of them, including
+     WorkingHours' `divide-y` which can't take an inline style. Falls back to
+     itself (no-op) when --brand-glow is unset, i.e. uncustomized companies. */
+  --modern-card-border: color-mix(in oklch, oklch(0.98 0 0 / 18%) 70%, var(--brand-glow, oklch(0.98 0 0 / 18%)) 30%);
+
+  /* PoweredByFooter's logo is dark ink on transparent, drawn for a light
+     background — invert it here so it stays legible on Modern's near-black
+     one. Read via `var(--powered-by-filter, none)` in PoweredByFooter.tsx,
+     so themes that don't set it (Luxury, default) get no filter at all. */
+  --powered-by-filter: invert(1) brightness(1.7);
+}

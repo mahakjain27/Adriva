@@ -1,0 +1,70 @@
+/**
+ * Minimal theme skin. Scoped entirely under `.theme-minimal` (applied by
+ * ProfileLayout — see src/features/profiles/ProfileLayout.tsx). Overrides
+ * the same semantic tokens shadcn/ui defines in src/index.css, so anything
+ * built against those tokens (MinimalCard, shadcn components, etc.) picks
+ * this up automatically. A soft warm off-white — distinct from Executive's
+ * cool near-white — with a quiet graphite default accent (not a color at
+ * all, by design: Minimal's brief is "brand color used sparingly"), a
+ * gentler mid radius than Executive's, and near-invisible shadows. The
+ * premium feeling here comes from spacing/type, not surface treatment —
+ * this file stays deliberately quieter than any other theme's.
+ */
+.theme-minimal {
+  --background: oklch(0.985 0.003 80);
+  --foreground: oklch(0.2 0.004 80);
+
+  --card: oklch(0.995 0.002 80);
+  --card-foreground: oklch(0.2 0.004 80);
+  --popover: oklch(0.995 0.002 80);
+  --popover-foreground: oklch(0.2 0.004 80);
+
+  /* Quiet graphite, not a hue — the default accent should barely register
+     as "a color" until a company picks a real Brand Color. */
+  --primary: oklch(0.28 0.008 80);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.965 0.002 80);
+  --secondary-foreground: oklch(0.2 0.004 80);
+  --muted: oklch(0.965 0.002 80);
+  --muted-foreground: oklch(0.56 0.004 80);
+  --accent: oklch(0.28 0.008 80);
+  --accent-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.92 0.002 80);
+  --input: oklch(0.92 0.002 80);
+  --ring: oklch(0.28 0.008 80);
+
+  /* Softer than Executive's structured 0.5rem, more restrained than
+     Luxury's generous 1.25rem — considered, not severe, not lush. */
+  --radius: 0.75rem;
+
+  /* Minimal's own voice — overrides the app-wide Plus Jakarta Sans
+     (tokens.css). Deliberately the SAME family as the app's own body font
+     (Inter) rather than pairing a separate display face — one quiet
+     typeface throughout is itself the minimal statement; hierarchy comes
+     from weight/size/spacing, not a second font. */
+  --font-heading: "Inter Variable", "Inter", system-ui, sans-serif;
+
+  /* The Hero name's font, as a theme-agnostic seam (every *Hero reads
+     --font-name) — defined in terms of what Minimal already has, so this
+     line changes nothing on its own; it only matters once the Theme
+     Builder's Typography section overrides --font-name directly. */
+  --font-name: var(--font-heading);
+
+  /* Near-invisible — the quietest shadow scale of any theme. Structure
+     comes from whitespace and hairline borders, not elevation. */
+  --shadow-xs: 0 1px 1px rgba(20, 18, 15, 0.02);
+  --shadow-sm: 0 1px 3px rgba(20, 18, 15, 0.03);
+  --shadow-md: 0 2px 10px rgba(20, 18, 15, 0.04);
+  --shadow-lg: 0 6px 22px rgba(20, 18, 15, 0.05);
+  --shadow-xl: 0 12px 34px rgba(20, 18, 15, 0.06);
+  --shadow-glow: 0 0 0 1px oklch(0.28 0.008 80 / 10%), 0 4px 18px oklch(0.28 0.008 80 / 5%);
+
+  /* Brand-tinted (restrained — 15%, the lightest touch of any theme so far),
+     not flat neutral. Every divider/card border across About/Products/
+     Location/WorkingHours reads this one var, so tinting it here once
+     reaches all of them, including WorkingHours' `divide-y` which can't
+     take an inline style. Falls back to itself (no-op) when --brand-glow is
+     unset, i.e. uncustomized companies render unchanged. */
+  --minimal-card-border: color-mix(in oklch, oklch(0.92 0.002 80) 85%, var(--brand-glow, oklch(0.92 0.002 80)) 15%);
+}

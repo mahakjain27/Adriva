@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.pyc
+*.db
+.env
+uploads/companies/*
+uploads/employees/*
+uploads/products/*
+!uploads/companies/.gitkeep
+!uploads/employees/.gitkeep
+!uploads/products/.gitkeep
+.pytest_cache/

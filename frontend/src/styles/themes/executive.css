@@ -1,0 +1,75 @@
+/**
+ * Executive theme skin. Scoped entirely under `.theme-executive` (applied by
+ * ProfileLayout — see src/features/profiles/ProfileLayout.tsx). Overrides
+ * the same semantic tokens shadcn/ui defines in src/index.css, so anything
+ * built against those tokens (ExecutiveCard, shadcn components, etc.) picks
+ * this up automatically. Crisp, neutral, near-achromatic light base — a
+ * "corporate letterhead" register, deliberately distinct from both Luxury
+ * (warm pastel light) and Modern (near-black, saturated accent): true
+ * grays, a single restrained slate accent, structured mid radius, flat
+ * controlled shadows instead of glow.
+ */
+.theme-executive {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.2 0.006 250);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.2 0.006 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.2 0.006 250);
+
+  /* Restrained slate — a default corporate accent, not a saturated blue;
+     fully overridden by Brand Color the moment a company customizes. */
+  --primary: oklch(0.32 0.025 255);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.003 250);
+  --secondary-foreground: oklch(0.2 0.006 250);
+  --muted: oklch(0.96 0.003 250);
+  --muted-foreground: oklch(0.52 0.006 250);
+  --accent: oklch(0.32 0.025 255);
+  --accent-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.89 0.003 250);
+  --input: oklch(0.89 0.003 250);
+  --ring: oklch(0.32 0.025 255);
+
+  /* Structured — between Modern's sharp 0.375rem and Luxury's generous
+     1.25rem. Reads as "considered," not soft, not severe. */
+  --radius: 0.5rem;
+
+  /* Executive's own voice — overrides the app-wide Plus Jakarta Sans
+     (tokens.css) for anything using the `font-heading` utility, scoped to
+     this theme only (same pattern as Luxury's Playfair Display and Modern's
+     Sora overrides). A highly readable professional sans, not a display
+     face — used for the employee name, company name, designation, section
+     titles, buttons, and quick-action labels alike. */
+  --font-heading: "Public Sans Variable", "Public Sans", system-ui, sans-serif;
+
+  /* The Hero name's font, as a theme-agnostic seam (every *Hero reads
+     --font-name) — defined in terms of what Executive already has, so this
+     line changes nothing on its own; it only matters once the Theme
+     Builder's Typography section overrides --font-name directly. */
+  --font-name: var(--font-heading);
+
+  /* Flat and controlled — no soft halo (Luxury), no hard offset pop
+     (Modern). Just enough lift to read as "premium paper," not "glowing." */
+  --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 10px 28px rgba(15, 23, 42, 0.08);
+  --shadow-xl: 0 18px 44px rgba(15, 23, 42, 0.1);
+  --shadow-glow: 0 0 0 1px oklch(0.32 0.025 255 / 18%), 0 6px 20px oklch(0.32 0.025 255 / 10%);
+
+  /* Structural only, same as Luxury's --luxury-hero-* / Modern's
+     --modern-*-border — every *color* the Hero shows now derives from the
+     general tokens above via color-mix, so it stays in sync with
+     per-company customization. */
+  --executive-hero-card-border: oklch(0.89 0.003 250);
+  /* Brand-tinted (restrained — 20%, less than Modern's 30%), not flat neutral.
+     Every divider/card border across About/Products/Location/WorkingHours
+     reads this one var, so tinting it here once reaches all of them,
+     including WorkingHours' `divide-y` which can't take an inline style.
+     Falls back to itself (no-op) when --brand-glow is unset, i.e.
+     uncustomized companies render unchanged. */
+  --executive-card-border: color-mix(in oklch, oklch(0.89 0.003 250) 80%, var(--brand-glow, oklch(0.89 0.003 250)) 20%);
+}

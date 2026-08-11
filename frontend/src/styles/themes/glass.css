@@ -1,0 +1,73 @@
+/**
+ * Glass theme skin. Scoped entirely under `.theme-glass` (applied by
+ * ProfileLayout — see src/features/profiles/ProfileLayout.tsx). Overrides
+ * the same semantic tokens shadcn/ui defines in src/index.css, so anything
+ * built against those tokens (GlassmorphicCard, shadcn components, etc.)
+ * picks this up automatically. A deep, low-chroma near-black canvas — richer
+ * and more atmospheric than Modern's bold near-black, meant to let
+ * translucent surfaces and ambient blobs do the visual work rather than
+ * solid color/geometry. Generous radius (the most of any theme) so glass
+ * panels read as large soft "visionOS" surfaces, not sharp UI chrome.
+ */
+.theme-glass {
+  --background: oklch(0.11 0.014 258);
+  --foreground: oklch(0.97 0.004 258);
+
+  --card: oklch(0.18 0.017 258);
+  --card-foreground: oklch(0.97 0.004 258);
+  --popover: oklch(0.18 0.017 258);
+  --popover-foreground: oklch(0.97 0.004 258);
+
+  /* A cool glass-blue-violet default — overridden entirely the moment a
+     company picks a real Brand Color; every atmospheric effect below reads
+     from --primary/--accent/--brand-*, never a second fixed hue. */
+  --primary: oklch(0.78 0.08 240);
+  --primary-foreground: oklch(0.16 0.012 240);
+  --secondary: oklch(0.23 0.018 258);
+  --secondary-foreground: oklch(0.97 0.004 258);
+  --muted: oklch(0.23 0.018 258);
+  --muted-foreground: oklch(0.72 0.018 258);
+  --accent: oklch(0.78 0.08 240);
+  --accent-foreground: oklch(0.16 0.012 240);
+
+  --border: oklch(0.98 0 0 / 14%);
+  --input: oklch(0.98 0 0 / 14%);
+  --ring: oklch(0.78 0.08 240);
+
+  /* The most generous radius of any theme — large, soft, rounded glass
+     panels rather than sharp UI chrome. */
+  --radius: 1.5rem;
+
+  /* Glass's own voice — overrides the app-wide Plus Jakarta Sans
+     (tokens.css). A geometric, slightly futuristic sans distinct from every
+     other theme's heading face. */
+  --font-heading: "Outfit Variable", "Outfit", system-ui, sans-serif;
+
+  /* The Hero name's font, as a theme-agnostic seam (every *Hero reads
+     --font-name) — defined in terms of what Glass already has, so this line
+     changes nothing on its own; it only matters once the Theme Builder's
+     Typography section overrides --font-name directly. */
+  --font-name: var(--font-heading);
+
+  /* Deep and layered — dimensional shadows are part of Glass's identity
+     (depth is explicitly part of the brief), noticeably richer than the
+     other light themes' but calmer/moodier than Modern's stark offset look. */
+  --shadow-xs: 0 2px 6px rgba(0, 0, 0, 0.26);
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 14px 34px rgba(0, 0, 0, 0.34);
+  --shadow-lg: 0 26px 60px rgba(0, 0, 0, 0.38);
+  --shadow-xl: 0 36px 84px rgba(0, 0, 0, 0.42);
+  --shadow-glow: 0 0 0 1px oklch(0.78 0.08 240 / 30%), 0 0 44px oklch(0.78 0.08 240 / 28%);
+
+  /* Structural only, same as every other theme's *-hero-card-border — the
+     Hero panel's own border, brighter than the secondary/tertiary one below
+     since it's the theme's primary glass surface. */
+  --glass-hero-card-border: oklch(0.98 0 0 / 24%);
+  /* Brand-tinted (20% — stronger than Executive/Minimal's, since "glass
+     tint" driven hard by Brand Color is one of this theme's explicit
+     requirements), not flat neutral. Every secondary/tertiary surface reads
+     this one var, including WorkingHours' `divide-y` which can't take an
+     inline style. Falls back to itself (no-op) when --brand-glow is unset,
+     i.e. uncustomized companies render unchanged. */
+  --glass-card-border: color-mix(in oklch, oklch(0.98 0 0 / 14%) 80%, var(--brand-glow, oklch(0.98 0 0 / 14%)) 20%);
+}
