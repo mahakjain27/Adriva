@@ -1,4 +1,4 @@
-import { apiUpload } from "./apiClient"
+import { apiUploadAdmin as apiUpload } from "./apiClient"
 
 export const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const
 

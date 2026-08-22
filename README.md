@@ -11,6 +11,7 @@ Adriva/
 ├── frontend/   React 19 + Vite + TypeScript + Tailwind CSS v4 + shadcn/ui + Framer Motion
 ├── backend/    FastAPI + SQLAlchemy + Alembic + SQLite (Postgres-ready)
 ├── docs/       design-system.md — tokens/motion/theme architecture reference
+│               deployment.md — Vercel (frontend) + VPS (backend) production setup
 └── assets/
 ```
 
@@ -42,7 +43,14 @@ cp .env.example .env          # defaults already work for local dev
 npm run dev
 ```
 
-Admin dashboard at `http://localhost:5173/dashboard` (no login — intentional, Adriva is currently admin-operated with no auth gate). Public profiles are served at `http://localhost:5173/:companySlug/:employeeSlug`.
+Admin dashboard at `http://localhost:5173/dashboard` — gated by a single access-key prompt (no email/password form), checked against `ADMIN_API_KEY` in `backend/.env`. Public profiles are served at `http://localhost:5173/:companySlug/:employeeSlug` and need no key.
+
+## Deployment
+
+Frontend on Vercel, backend on a VPS (SQLite + local uploads need a
+persistent host — Vercel's serverless functions can't hold either between
+requests). See `docs/deployment.md` for the full walkthrough, including the
+HTTPS requirement (Vercel's HTTPS frontend can't call a plain-HTTP API).
 
 ## Testing
 

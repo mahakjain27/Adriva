@@ -1,4 +1,4 @@
-import { ApiError, apiFetch } from "@/lib/apiClient"
+import { ApiError, apiFetchAdmin as apiFetch } from "@/lib/apiClient"
 import type { Employee, EmployeeInput } from "../types"
 
 /** Real backend calls — see backend/app/api/employees.py. Function names/signatures are unchanged from the previous in-memory mock. */

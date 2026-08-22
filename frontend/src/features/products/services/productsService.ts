@@ -1,4 +1,4 @@
-import { apiFetch } from "@/lib/apiClient"
+import { apiFetchAdmin as apiFetch } from "@/lib/apiClient"
 import type { Product, ProductInput } from "../types"
 
 /** Real backend calls — see backend/app/api/products.py. Function names/signatures are unchanged from the previous in-memory mock. */
