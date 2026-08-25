@@ -28,11 +28,23 @@ function loadImage(dataUrl: string): Promise<HTMLImageElement> {
   })
 }
 
-/** Captures each side exactly as it currently renders in the Designer — no re-layout, just a screenshot of the live node the caller passes in. */
+/**
+ * Captures each side exactly as it currently renders in the Designer — no
+ * re-layout, just a screenshot of the live node the caller passes in.
+ *
+ * `cacheBust` matters here: the company logo / employee photo `<img>` tags
+ * render without a `crossOrigin` attribute, so their first load is a
+ * no-cors request the browser caches without any CORS headers attached.
+ * html-to-image then re-fetches the same URL in cors mode to inline it as a
+ * data URL — Chromium can serve that second fetch from the same cache
+ * entry, which fails the CORS check even though the backend's CORS config
+ * is correct (a fresh request gets the right header). `cacheBust` appends a
+ * throwaway query param so this fetch always misses the cache.
+ */
 async function captureSides(frontNode: HTMLElement, backNode: HTMLElement) {
   const [frontPng, backPng] = await Promise.all([
-    toPng(frontNode, { pixelRatio: PIXEL_RATIO }),
-    toPng(backNode, { pixelRatio: PIXEL_RATIO }),
+    toPng(frontNode, { pixelRatio: PIXEL_RATIO, cacheBust: true }),
+    toPng(backNode, { pixelRatio: PIXEL_RATIO, cacheBust: true }),
   ])
   return { frontPng, backPng }
 }

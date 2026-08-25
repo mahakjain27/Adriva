@@ -109,8 +109,9 @@ export function NfcCardDesignerPage() {
     try {
       await deselectAndWaitForRepaint()
       await exportCardPng(frontRef.current, backRef.current, `${e.slug}-nfc-card.png`)
-    } catch {
-      toast.error("Couldn't export the card. Please try again.")
+    } catch (error) {
+      console.error("NFC card PNG export failed:", error)
+      toast.error("Couldn't export the card. Check the browser console.")
     } finally {
       setIsExporting(false)
       setSelectedElementId(previousSelection)
@@ -124,8 +125,9 @@ export function NfcCardDesignerPage() {
     try {
       await deselectAndWaitForRepaint()
       await exportCardsPdf(frontRef.current, backRef.current, `${e.slug}-nfc-card.pdf`)
-    } catch {
-      toast.error("Couldn't export the card. Please try again.")
+    } catch (error) {
+      console.error("NFC card PDF export failed:", error)
+      toast.error("Couldn't export the card. Check the browser console.")
     } finally {
       setIsExporting(false)
       setSelectedElementId(previousSelection)
