@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     admin_api_key: str = ""
     frontend_url: str = "http://localhost:5173"
     public_base_url: str = "http://localhost:8000"
+    public_profile_base_url: str = "http://localhost:5173"
     upload_dir: str = "uploads"
 
     @property

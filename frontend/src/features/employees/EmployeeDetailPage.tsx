@@ -42,7 +42,7 @@ export function EmployeeDetailPage() {
   const duplicateEmployee = useDuplicateEmployee()
 
   const profileUrl =
-    employee.data && company.data ? getProfileUrl(company.data, employee.data) : undefined
+    employee.data && company.data ? getProfileUrl(employee.data) : undefined
 
   const qr = useQuery({
     queryKey: ["qr", profileUrl],

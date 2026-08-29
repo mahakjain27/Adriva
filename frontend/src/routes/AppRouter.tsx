@@ -56,11 +56,14 @@ export function AppRouter() {
           />
         )}
 
-        {/* The real public digital profile — /:companySlug/:employeeSlug, matching
-            the URL scheme getProfileUrl() already builds for QR/vCard/NFC. Registered
-            last: react-router ranks static segments (/dashboard, /playground) above
-            dynamic ones regardless of order, but keeping the catch-all pattern last
-            in the JSX also reads correctly to a human. */}
+        {/* The real public digital profile — /:companySlug/:employeeSlug. This is
+            where the backend's GET /c/{employeeId} redirect (see profiles.py) lands
+            after resolving an employee's current slug pair; getProfileUrl() never
+            builds this pattern directly anymore since slugs aren't stable enough to
+            print on physical media. Registered last: react-router ranks static
+            segments (/dashboard, /playground) above dynamic ones regardless of
+            order, but keeping the catch-all pattern last in the JSX also reads
+            correctly to a human. */}
         <Route path="/:companySlug/:employeeSlug" element={<PublicProfilePage />} />
       </Routes>
     </BrowserRouter>

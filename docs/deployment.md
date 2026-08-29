@@ -49,8 +49,14 @@ DATABASE_URL=sqlite:///./adriva.db
 ADMIN_API_KEY=<generate with: openssl rand -hex 32>
 FRONTEND_URL=https://<your-vercel-project>.vercel.app
 PUBLIC_BASE_URL=https://YOUR_VPS_IP.sslip.io
+PUBLIC_PROFILE_BASE_URL=https://<your-vercel-project>.vercel.app
 UPLOAD_DIR=uploads
 ```
+
+`PUBLIC_PROFILE_BASE_URL` must match your actual deployed frontend domain —
+it's what `GET /c/{employeeId}` (the permanent link printed on QR codes and
+written to NFC chips) redirects to. Get this wrong and every physical card
+you've already handed out redirects to the wrong place.
 
 `ADMIN_API_KEY` gates every private management endpoint (companies,
 employees, products, themes, uploads) — it's checked as `Authorization:
@@ -154,7 +160,6 @@ Production, and Preview if you want previews working too):
 
 ```
 VITE_API_BASE_URL=https://YOUR_VPS_IP.sslip.io
-VITE_PUBLIC_BASE_URL=https://<your-vercel-project>.vercel.app
 ```
 
 Also double-check **Settings → General → Root Directory** is set to
@@ -175,6 +180,7 @@ route needs — without it, a direct link or refresh on a public profile URL
 - `https://YOUR_VPS_IP.sslip.io/api/companies` — returns JSON, not a CORS/connection error.
 - Your Vercel URL's `/dashboard/employees` — shows real data.
 - Open a public profile URL directly (not via in-app navigation) and refresh it — should render, not 404.
+- `https://YOUR_VPS_IP.sslip.io/c/{any real employee id}` — should redirect (302) to that employee's live profile on your Vercel domain, not the VPS domain. This is the link QR codes and NFC cards actually encode.
 
 ## Updating the backend later
 

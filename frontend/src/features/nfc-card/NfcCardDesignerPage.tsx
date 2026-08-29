@@ -48,7 +48,7 @@ export function NfcCardDesignerPage() {
     setDesign(employee.data.nfcCard ?? buildDefaultCardDesign(company.data, employee.data))
   }, [design, employee.data, company.data])
 
-  const profileUrl = employee.data && company.data ? getProfileUrl(company.data, employee.data) : undefined
+  const profileUrl = employee.data && company.data ? getProfileUrl(employee.data) : undefined
   const qr = useQuery({
     queryKey: ["qr", profileUrl],
     queryFn: () => generateQrDataUrl(profileUrl!),

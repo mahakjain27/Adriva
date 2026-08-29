@@ -31,8 +31,9 @@ app.add_middleware(
 app.mount("/uploads", StaticFiles(directory=settings.upload_dir), name="uploads")
 
 # Everything here is Adriva's own private management surface — protected by
-# require_admin. profiles.router (the public digital-card + vCard endpoints
-# customers' QR codes hit) is deliberately the only router left open below.
+# require_admin. profiles.router/card_router (the public digital-card, vCard,
+# and /c/{id} redirect endpoints customers' QR codes and NFC cards hit) are
+# deliberately the only routers left open below.
 _admin_gate = [Depends(require_admin)]
 app.include_router(companies.router, dependencies=_admin_gate)
 app.include_router(employees.router, dependencies=_admin_gate)
@@ -40,6 +41,7 @@ app.include_router(products.router, dependencies=_admin_gate)
 app.include_router(uploads.router, dependencies=_admin_gate)
 app.include_router(themes.router, dependencies=_admin_gate)
 app.include_router(profiles.router)
+app.include_router(profiles.card_router)
 
 
 @app.get("/", tags=["health"])

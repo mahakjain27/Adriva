@@ -8,6 +8,9 @@ from sqlalchemy.orm import sessionmaker
 from app.core.database import Base, get_db
 from app.main import app
 
+TEST_ADMIN_KEY = "test-admin-key"
+TEST_PUBLIC_PROFILE_BASE_URL = "https://cards.example.com"
+
 
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
@@ -20,6 +23,12 @@ def client(tmp_path, monkeypatch):
 
     upload_dir = tempfile.mkdtemp()
     monkeypatch.setattr("app.services.upload_service.get_settings", lambda: _TestSettings(upload_dir))
+    # require_admin and the /c/{id} redirect each read settings independently
+    # (get_settings() is imported by name into each module) — both need a
+    # fixed, known value here rather than whatever happens to be in the real
+    # .env, or these tests would silently depend on developer machine state.
+    monkeypatch.setattr("app.core.auth.get_settings", lambda: _TestAuthSettings())
+    monkeypatch.setattr("app.api.profiles.get_settings", lambda: _TestProfileSettings())
 
     def override_get_db():
         db = TestingSessionLocal()
@@ -30,6 +39,7 @@ def client(tmp_path, monkeypatch):
 
     app.dependency_overrides[get_db] = override_get_db
     with TestClient(app) as test_client:
+        test_client.headers.update({"Authorization": f"Bearer {TEST_ADMIN_KEY}"})
         yield test_client
     app.dependency_overrides.clear()
 
@@ -38,6 +48,14 @@ class _TestSettings:
     def __init__(self, upload_dir: str):
         self.upload_dir = upload_dir
         self.public_base_url = "http://testserver"
+
+
+class _TestAuthSettings:
+    admin_api_key = TEST_ADMIN_KEY
+
+
+class _TestProfileSettings:
+    public_profile_base_url = TEST_PUBLIC_PROFILE_BASE_URL
 
 
 @pytest.fixture()
