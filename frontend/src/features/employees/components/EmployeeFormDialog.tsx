@@ -533,8 +533,12 @@ export function EmployeeFormDialog({
                   addLabel="Add phone number"
                   placeholder="+1 000 000 0000"
                 />
-                {form.formState.errors.phones?.message && (
-                  <p className="text-sm text-destructive">{form.formState.errors.phones.message}</p>
+                {/* A whole-array refine (not a per-index error) lands at .root.message in
+                    react-hook-form v7.44+, not .message directly — reading .message here
+                    silently swallowed this error, so the toast fired with nothing visibly
+                    highlighted to explain why. */}
+                {form.formState.errors.phones?.root?.message && (
+                  <p className="text-sm text-destructive">{form.formState.errors.phones.root.message}</p>
                 )}
               </div>
             </CollapsibleSection>
