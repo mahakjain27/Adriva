@@ -107,6 +107,25 @@ function buildQuickActions(employee: ProfileEmployeeInput, company: ProfileCompa
   return actions
 }
 
+const TAGLINE_MAX_LENGTH = 80
+
+/**
+ * A short teaser shown under the name/company in the Hero — the same
+ * `about` text also appears in full in the About section further down the
+ * page. Previously took the "first sentence" via `about.split(".")[0]`,
+ * which mangles any about text starting with an abbreviation that contains
+ * a period ("Pvt. Ltd.", "Inc.", "Dr.", ...) by cutting right after the
+ * abbreviation's own period rather than the sentence's. Truncating to a
+ * fixed length at a word boundary instead sidesteps that entirely.
+ */
+function deriveTagline(about: string): string {
+  const trimmed = about.trim()
+  if (trimmed.length <= TAGLINE_MAX_LENGTH) return trimmed
+  const truncated = trimmed.slice(0, TAGLINE_MAX_LENGTH)
+  const lastSpace = truncated.lastIndexOf(" ")
+  return `${(lastSpace > 0 ? truncated.slice(0, lastSpace) : truncated).trimEnd()}…`
+}
+
 /** Maps a Company + Employee record into the shape the real ProfileEngine renders. */
 export function employeeToProfileData(
   employee: ProfileEmployeeInput,
@@ -118,7 +137,7 @@ export function employeeToProfileData(
       name: employee.name,
       title: employee.designation,
       company: company.name,
-      tagline: company.about.split(".")[0] ?? "",
+      tagline: deriveTagline(company.about),
       avatarUrl: employee.photoPath,
       logoUrl: company.logoPath,
     },
