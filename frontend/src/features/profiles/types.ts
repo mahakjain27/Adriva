@@ -2,7 +2,6 @@ export interface ProfileHero {
   name: string
   title: string
   company: string
-  tagline: string
   avatarUrl: string
   logoUrl: string
 }

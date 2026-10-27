@@ -139,12 +139,6 @@ export function Hero({ data, theme, onSaveContact }: HeroSectionProps) {
     </motion.p>
   )
 
-  const tagline = data.tagline && (
-    <motion.p variants={item} className="text-body" style={{ color: "var(--foreground)", opacity: 0.85 }}>
-      {data.tagline}
-    </motion.p>
-  )
-
   if (split) {
     return (
       <motion.section
@@ -159,7 +153,6 @@ export function Hero({ data, theme, onSaveContact }: HeroSectionProps) {
           {companyLabel}
           {nameHeading}
           {titleLine}
-          {tagline}
         </div>
         {saveButton}
       </motion.section>
@@ -183,7 +176,6 @@ export function Hero({ data, theme, onSaveContact }: HeroSectionProps) {
           {nameHeading}
           {titleLine}
           {companyLabel}
-          {tagline}
         </div>
         <div className="relative z-[1] w-full">{saveButton}</div>
       </Panel>

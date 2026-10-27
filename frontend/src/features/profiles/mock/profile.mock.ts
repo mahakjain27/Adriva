@@ -12,7 +12,6 @@ export const mockProfile: ProfileData = {
     name: "Aditya Kothari",
     title: "Business Development Manager",
     company: "Aadrik Distributors Pvt. Ltd.",
-    tagline: "Building Lasting Partnerships",
     avatarUrl: "",
     logoUrl: "",
   },
